@@ -4,7 +4,9 @@ loadgenerator
 Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
 
 Add POCDriver https://github.com/johnlpage/POCDriver to your local maven repository 
+
 https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html
+
 mvn install:install-file -Dfile=POCDriver.jar -DgroupId=com.mongodb -DartifactId=POCDriver -Dversion=1.0 -Dpackaging=JAR
 
 
