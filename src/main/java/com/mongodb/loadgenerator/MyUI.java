@@ -19,6 +19,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -42,17 +43,44 @@ public class MyUI extends UI {
 	private Options cliopt;
 	private String lblvalue;
 	private boolean isRunning = false;
+	private Button btnstartdriver;
 
 	Thread t = new Thread(new Runnable() {
 
 		@Override
 		public void run() {
+//			ProcessBuilder pb = new ProcessBuilder("java", "-jar", "/WEB-INF/lib/POCDriver.jar");
+//			Process p;
+//			try {
+//				System.out.println("start poc driver");
+//				p = pb.start();
+//				updateStartButton();
+//				BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//				String s = "";
+//				while ((s = in.readLine()) != null) {
+//					System.out.println(s);
+//				}
+//				int status = p.waitFor();
+//				System.out.println("Exited with status: " + status);
+//				System.out.println("POC Driver DONE");
+//				isRunning = false;
+//				updateStartButton();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+			
 			POCDriver.main(new String[] { lblvalue });
 		}
 	});
+	private TextArea txtArea;
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
+		System.setOut(new PrintStreamCapturer(txtArea, System.out));
+		System.setErr(new PrintStreamCapturer(txtArea, System.err, "[ERROR] "));
+		
 		setUpEventHandling();
 		final VerticalLayout layout = new VerticalLayout();
 
@@ -127,7 +155,7 @@ public class MyUI extends UI {
 			}
 		});
 
-		Button btnstartdriver = new Button("Start Driver");
+		btnstartdriver = new Button("Start Driver");
 		btnstartdriver.addClickListener(new ClickListener() {
 
 			/**
@@ -137,15 +165,13 @@ public class MyUI extends UI {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (!isRunning) {
-					btnstartdriver.setCaption("Stop Driver");
+				if (!t.isAlive()) {
 					t.start();
 				} else {
-					btnstartdriver.setCaption("Stopping Driver");
-					t.destroy();
-					btnstartdriver.setCaption("Start Driver");
+					t.interrupt();
 				}
 				isRunning = !isRunning;
+				updateStartButton();
 			}
 		});
 
@@ -161,9 +187,13 @@ public class MyUI extends UI {
 		HorizontalLayout layoutlbl = new HorizontalLayout();
 		layoutlbl.addComponent(lblParameter);
 
+		txtArea = new TextArea();
+		txtArea.setWidth("100%");
+		
 		Label h1 = new Label("Visual PoC Driver");
 		h1.addStyleName("h1");
 		layout.addComponent(h1);
+		layout.addComponent(txtArea);
 		layout.addComponent(layoutbuttons);
 		layout.addComponent(layoutlbl);
 		layout.addComponent(tblOptions);
@@ -290,6 +320,16 @@ public class MyUI extends UI {
 		beans.removeAllItems();
 		for (Option opt : cliopt.getOptions()) {
 			beans.addBean(new BeanOptions(opt.getOpt(), opt.getLongOpt(), opt.getDescription(), "", false));
+		}
+	}
+
+	private void updateStartButton() {
+		System.out.println("is Running: " + isRunning);
+		if (!isRunning) {
+			btnstartdriver.setCaption("Stop Driver");
+		} else {
+			btnstartdriver.setCaption("Stopping Driver");
+			btnstartdriver.setCaption("Start Driver");
 		}
 	}
 
