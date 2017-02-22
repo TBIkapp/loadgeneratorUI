@@ -26,6 +26,7 @@ public class PrintStreamCapturer extends PrintStream {
 			synchronized (text) {
 				text.setCursorPosition(text.getValue().length());
 				text.setValue(text.getValue() + str);
+				text.requestRepaint();
 			}
 		}
 	}
@@ -43,6 +44,7 @@ public class PrintStreamCapturer extends PrintStream {
 		if (!last.equals("")) {
 			writeWithPotentialIndent(last);
 		}
+		text.requestRepaint();
 	}
 
 	private void writeWithPotentialIndent(String s) {
@@ -56,6 +58,7 @@ public class PrintStreamCapturer extends PrintStream {
 
 	private void newLine() {
 		write("\n");
+		text.requestRepaint();
 	}
 
 	@Override
@@ -64,6 +67,7 @@ public class PrintStreamCapturer extends PrintStream {
 			super.print(b);
 			write(String.valueOf(b));
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -72,6 +76,7 @@ public class PrintStreamCapturer extends PrintStream {
 			super.print(c);
 			write(String.valueOf(c));
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -80,6 +85,7 @@ public class PrintStreamCapturer extends PrintStream {
 			super.print(s);
 			write(String.valueOf(s));
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -88,6 +94,7 @@ public class PrintStreamCapturer extends PrintStream {
 			super.print(d);
 			write(String.valueOf(d));
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -96,6 +103,7 @@ public class PrintStreamCapturer extends PrintStream {
 			super.print(f);
 			write(String.valueOf(f));
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -104,6 +112,7 @@ public class PrintStreamCapturer extends PrintStream {
 			super.print(i);
 			write(String.valueOf(i));
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -112,6 +121,7 @@ public class PrintStreamCapturer extends PrintStream {
 			super.print(l);
 			write(String.valueOf(l));
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -120,6 +130,7 @@ public class PrintStreamCapturer extends PrintStream {
 			super.print(o);
 			write(String.valueOf(o));
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -132,6 +143,7 @@ public class PrintStreamCapturer extends PrintStream {
 				write(s);
 			}
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -140,6 +152,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -149,6 +162,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -158,6 +172,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -167,6 +182,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -176,6 +192,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -185,6 +202,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -194,6 +212,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -203,6 +222,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -212,6 +232,7 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 
 	@Override
@@ -222,5 +243,6 @@ public class PrintStreamCapturer extends PrintStream {
 			newLine();
 			super.println();
 		}
+		text.requestRepaint();
 	}
 }
